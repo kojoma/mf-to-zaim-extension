@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "Money Forward to Zaim Syncer",
+  "version": "1.0.0",
+  "description": "マネーフォワードの月次収支データをZaimへスマートにコピー・同期します。",
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://api.zaim.net/*",
+    "https://moneyforward.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "options_page": "options.html",
+  "action": {
+    "default_title": "Money Forward to Zaim Syncer",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://moneyforward.com/cf*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icon.png"
+      ],
+      "matches": [
+        "https://moneyforward.com/*"
+      ]
+    }
+  ]
+}

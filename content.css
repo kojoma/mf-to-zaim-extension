@@ -1,0 +1,546 @@
+/* content.css - Beautiful, premium injected sidebar and components for Money Forward */
+
+:root {
+  --zaim-orange: hsl(28, 88%, 53%);
+  --zaim-green: hsl(116, 52%, 46%);
+  --zaim-bg: hsla(222, 24%, 8%, 0.95);
+  --zaim-card-bg: hsla(222, 20%, 15%, 0.85);
+  --zaim-border: hsla(222, 10%, 28%, 0.5);
+  
+  --zaim-text-primary: hsl(210, 40%, 98%);
+  --zaim-text-secondary: hsl(215, 20%, 75%);
+  --zaim-text-muted: hsl(215, 12%, 55%);
+  
+  --zaim-income: hsl(116, 60%, 55%);
+  --zaim-expense: hsl(28, 90%, 60%);
+  --zaim-input-bg: hsla(222, 25%, 6%, 0.9);
+}
+
+/* Floating Sync Button */
+.zaim-floating-trigger {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 99999;
+  background: linear-gradient(135deg, var(--zaim-orange) 0%, var(--zaim-green) 100%);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 24px;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow: 0 8px 32px rgba(238, 124, 17, 0.4), 0 0 15px rgba(60, 169, 53, 0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: trigger-pulse 3s infinite alternate;
+}
+
+.zaim-floating-trigger:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 12px 40px rgba(238, 124, 17, 0.55), 0 0 25px rgba(60, 169, 53, 0.35);
+}
+
+.zaim-floating-trigger:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+@keyframes trigger-pulse {
+  0% { box-shadow: 0 8px 32px rgba(238, 124, 17, 0.4), 0 0 0px rgba(60, 169, 53, 0); }
+  100% { box-shadow: 0 8px 32px rgba(238, 124, 17, 0.5), 0 0 20px rgba(60, 169, 53, 0.4); }
+}
+
+/* Sidebar Wrapper */
+.zaim-sidebar-wrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 480px;
+  height: 100vh;
+  z-index: 100000;
+  background-color: var(--zaim-bg);
+  border-left: 1px solid var(--zaim-border);
+  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--zaim-text-primary);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.zaim-sidebar-wrapper.open {
+  transform: translateX(0);
+}
+
+/* Sidebar Header */
+.zaim-sidebar-header {
+  padding: 24px;
+  border-bottom: 1px solid var(--zaim-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.zaim-header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.zaim-header-title img {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.zaim-header-title h2 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--zaim-orange) 0%, var(--zaim-green) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+.zaim-sidebar-close {
+  background: transparent;
+  border: none;
+  color: var(--zaim-text-secondary);
+  font-size: 24px;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.zaim-sidebar-close:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--zaim-text-primary);
+}
+
+/* Sidebar Body Scroll Area */
+.zaim-sidebar-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Scrollbar styling */
+.zaim-sidebar-body::-webkit-scrollbar {
+  width: 6px;
+}
+.zaim-sidebar-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+.zaim-sidebar-body::-webkit-scrollbar-thumb {
+  background: hsla(222, 10%, 30%, 0.6);
+  border-radius: 3px;
+}
+
+/* Credentials Error Card */
+.zaim-error-card {
+  background-color: var(--zaim-card-bg);
+  border: 1px solid var(--zaim-orange);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.zaim-error-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--zaim-text-secondary);
+  margin: 0;
+}
+
+.zaim-error-card .btn-settings {
+  background: linear-gradient(135deg, var(--zaim-orange) 0%, var(--zaim-green) 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.zaim-error-card .btn-settings:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(238, 124, 17, 0.3);
+}
+
+/* Defaults Control panel */
+.zaim-control-panel {
+  background-color: var(--zaim-card-bg);
+  border: 1px solid var(--zaim-border);
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.zaim-control-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.zaim-control-row label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--zaim-text-muted);
+  letter-spacing: 0.5px;
+}
+
+.zaim-select-control {
+  background-color: var(--zaim-input-bg) !important;
+  border: 1px solid var(--zaim-border) !important;
+  color: var(--zaim-text-primary) !important;
+  border-radius: 8px !important;
+  padding: 10px 12px !important;
+  padding-right: 32px !important;
+  font-size: 13px !important;
+  height: auto !important;
+  min-height: 38px !important;
+  line-height: 1.5 !important;
+  box-sizing: border-box !important;
+  outline: none !important;
+  cursor: pointer !important;
+  font-family: inherit !important;
+  display: block !important;
+  width: 100% !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='rgba%28255,255,255,0.7%29' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 12px center !important;
+  background-size: 14px !important;
+}
+
+.zaim-select-control:focus {
+  border-color: var(--zaim-orange) !important;
+}
+
+/* Summary stats bar */
+.zaim-summary-bar {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--zaim-text-secondary);
+  border-bottom: 1px solid var(--zaim-border);
+  padding-bottom: 12px;
+}
+
+.zaim-summary-bar span strong {
+  color: var(--zaim-text-primary);
+}
+
+/* Transaction List */
+.zaim-tx-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.zaim-tx-card {
+  background-color: var(--zaim-card-bg);
+  border: 1px solid var(--zaim-border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.2s ease;
+  position: relative;
+}
+
+.zaim-tx-card:hover {
+  border-color: hsla(222, 10%, 40%, 0.6);
+}
+
+.zaim-tx-card.skipped {
+  opacity: 0.5;
+}
+
+.zaim-tx-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.zaim-checkbox-container {
+  display: flex;
+  align-items: center;
+  height: 20px;
+}
+
+.zaim-checkbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1.5px solid var(--zaim-border);
+  cursor: pointer;
+  accent-color: var(--zaim-orange);
+}
+
+.zaim-tx-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.zaim-tx-date-category {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--zaim-text-muted);
+  font-weight: 500;
+}
+
+.zaim-tx-mf-cat {
+  background-color: rgba(255,255,255,0.06);
+  padding: 1px 6px;
+  border-radius: 4px;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.zaim-tx-content {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--zaim-text-primary);
+  line-height: 1.4;
+  word-break: break-all;
+}
+
+.zaim-tx-amount-col {
+  text-align: right;
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.zaim-tx-amount-col.expense {
+  color: var(--zaim-expense);
+}
+
+.zaim-tx-amount-col.income {
+  color: var(--zaim-income);
+}
+
+/* Category mapping selectors inside card */
+.zaim-mapping-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 10px;
+}
+
+.zaim-mapping-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.zaim-mapping-row span {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--zaim-text-muted);
+}
+
+.zaim-mapping-row select {
+  flex: 1;
+  max-width: 75%;
+}
+
+.zaim-select-mapping {
+  background-color: var(--zaim-input-bg) !important;
+  border: 1px solid var(--zaim-border) !important;
+  color: var(--zaim-text-primary) !important;
+  border-radius: 6px !important;
+  padding: 6px 10px !important;
+  padding-right: 28px !important;
+  font-size: 12px !important;
+  height: auto !important;
+  min-height: 30px !important;
+  line-height: 1.5 !important;
+  box-sizing: border-box !important;
+  outline: none !important;
+  cursor: pointer !important;
+  font-family: inherit !important;
+  display: inline-block !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='rgba%28255,255,255,0.7%29' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 8px center !important;
+  background-size: 12px !important;
+}
+
+.zaim-select-mapping.unmapped {
+  border-color: var(--zaim-orange) !important;
+  box-shadow: 0 0 5px rgba(238, 124, 17, 0.2) !important;
+}
+
+/* Status overlays inside card during syncing */
+.zaim-sync-status {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.zaim-sync-status.waiting { color: var(--zaim-text-muted); }
+.zaim-sync-status.syncing { color: var(--zaim-orange); }
+.zaim-sync-status.success { color: var(--zaim-green); }
+.zaim-sync-status.error { color: #ff4a4a; }
+
+/* Sidebar Footer (action controls) */
+.zaim-sidebar-footer {
+  padding: 24px;
+  border-top: 1px solid var(--zaim-border);
+  background-color: hsla(222, 24%, 6%, 0.85);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Glowing progress bar */
+.zaim-progress-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.zaim-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--zaim-text-secondary);
+}
+
+.zaim-progress-track {
+  width: 100%;
+  height: 8px;
+  background-color: hsla(222, 20%, 10%, 0.8);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--zaim-border);
+}
+
+.zaim-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--zaim-orange) 0%, var(--zaim-green) 100%);
+  border-radius: 4px;
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 10px rgba(238, 124, 17, 0.4);
+}
+
+/* Register Action Button */
+.zaim-btn-sync {
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  border: none;
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--zaim-orange) 0%, var(--zaim-green) 100%);
+  box-shadow: 0 8px 24px rgba(238, 124, 17, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.zaim-btn-sync:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(238, 124, 17, 0.45);
+}
+
+.zaim-btn-sync:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.zaim-btn-sync:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.zaim-btn-sync .spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Defensive SVG and image resets to prevent parent page styling from distorting icons */
+.zaim-btn-sync svg,
+.zaim-floating-trigger img,
+.zaim-header-title img {
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  max-width: 20px !important;
+  max-height: 20px !important;
+  flex-shrink: 0 !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+.zaim-header-title img {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+  max-width: 32px !important;
+  max-height: 32px !important;
+  border-radius: 8px !important;
+}
+

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Money Forward to Zaim Syncer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: hsl(222, 24%, 7%);
+      --card-bg: hsla(222, 20%, 12%, 0.9);
+      --card-border: hsla(222, 10%, 25%, 0.4);
+      --text-primary: hsl(210, 40%, 98%);
+      --text-secondary: hsl(215, 20%, 75%);
+      --orange: hsl(28, 88%, 53%);
+      --green: hsl(116, 52%, 46%);
+      --orange-glow: hsla(28, 88%, 53%, 0.25);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      width: 320px;
+      font-family: 'Inter', -apple-system, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      padding: 20px;
+    }
+    .popup-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .app-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3), 0 0 8px var(--orange-glow);
+    }
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--orange) 0%, var(--green) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .status-box {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .status-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .status-val {
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .status-val.connected {
+      color: var(--green);
+    }
+    .status-val.not-connected {
+      color: var(--orange);
+    }
+    .instructions {
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      background-color: rgba(255,255,255,0.03);
+      border-radius: 8px;
+      padding: 10px;
+      border-left: 3px solid var(--orange);
+    }
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--orange) 0%, var(--green) 100%);
+      box-shadow: 0 4px 12px rgba(238, 124, 17, 0.2);
+      transition: all 0.2s ease;
+    }
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(238, 124, 17, 0.35);
+    }
+    .btn:active {
+      transform: translateY(1px);
+    }
+  </style>
+</head>
+<body>
+  <div class="popup-container">
+    <header>
+      <img src="icon.png" alt="Icon" class="app-icon">
+      <h1>MF to Zaim Syncer</h1>
+    </header>
+
+    <div class="status-box">
+      <span class="status-label">Zaim 接続状況</span>
+      <span id="status-val" class="status-val not-connected">
+        <span>●</span> 未設定
+      </span>
+    </div>
+
+    <p class="instructions">
+      マネーフォワードの<b>「家計簿 ＞ 取引履歴」</b>画面（https://moneyforward.com/cf）を開くと、画面右下にZaimへの同期ボタンが自動的に表示されます。
+    </p>
+
+    <button id="open-settings" class="btn">API設定画面を開く</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

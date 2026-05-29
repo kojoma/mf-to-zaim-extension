@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Zaim API 設定 - Money Forward to Zaim Syncer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="background-decor">
+    <div class="circle circle-orange"></div>
+    <div class="circle circle-green"></div>
+  </div>
+
+  <main class="container">
+    <header class="app-header">
+      <div class="logo-area">
+        <img src="icon.png" alt="App Icon" class="app-icon">
+        <h1 class="gradient-text">MF to Zaim Syncer</h1>
+      </div>
+      <p class="subtitle">マネーフォワードの月次収支データをZaimにスマートにコピーします。</p>
+    </header>
+
+    <section class="card glass">
+      <div class="card-header">
+        <span class="icon-span">🔑</span>
+        <h2>Zaim API 認証設定</h2>
+      </div>
+      <p class="description">
+        Zaimにデータを安全に書き込むため、OAuth 1.0a 認証キーを入力してください。
+        キーはブラウザのローカルストレージ（<code class="code-highlight">chrome.storage.local</code>）に暗号化されずに保存され、Zaim APIへの通信時のみ使用されます。
+      </p>
+
+      <form id="credentials-form" class="api-form">
+        <div class="input-group">
+          <label for="consumer-key">コンシューマー ID (Consumer Key)</label>
+          <input type="password" id="consumer-key" placeholder="Zaim Developersで発行されたコンシューマーID" required autocomplete="current-password">
+        </div>
+
+        <div class="input-group">
+          <label for="consumer-secret">コンシューマー シークレット (Consumer Secret)</label>
+          <input type="password" id="consumer-secret" placeholder="Zaim Developersで発行されたコンシューマーシークレット" required autocomplete="current-password">
+        </div>
+
+        <div class="input-group">
+          <label for="access-token">アクセス トークン (Access Token)</label>
+          <input type="password" id="access-token" placeholder="ご自身のアカウントに紐づくアクセストークン" required autocomplete="current-password">
+        </div>
+
+        <div class="input-group">
+          <label for="access-token-secret">アクセス トークン シークレット (Access Token Secret)</label>
+          <input type="password" id="access-token-secret" placeholder="ご自身のアカウントに紐づくアクセストークンシークレット" required autocomplete="current-password">
+        </div>
+
+        <div class="button-row">
+          <button type="submit" id="save-button" class="btn primary-gradient">
+            <span class="btn-text">保存して接続テスト</span>
+            <span class="spinner hidden"></span>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- OAuth Helper Assistant Card -->
+    <section class="card glass">
+      <div class="card-header">
+        <span class="icon-span">💫</span>
+        <h2>アクセストークン取得アシスタント</h2>
+      </div>
+      <p class="description">
+        Zaim Developersで発行された <b>コンシューマーID</b> と <b>コンシューマーシークレット</b> を上のフォームに入力した状態で、以下の手順に沿ってアクセストークンを簡単に取得できます。
+      </p>
+
+      <div class="api-form">
+        <!-- Step 1: Start OAuth -->
+        <div id="helper-step-1" class="helper-step">
+          <div class="step-badge">ステップ 1</div>
+          <p class="step-text">上のフォームにコンシューマーIDとシークレットを入力後、下のボタンを押してZaimの認証画面を開き、アクセスを許可してください。</p>
+          <button type="button" id="btn-oauth-start" class="btn secondary">
+            Zaim認証ページを開く
+          </button>
+        </div>
+
+        <!-- Step 2: Paste verifier (PIN) -->
+        <div id="helper-step-2" class="helper-step disabled">
+          <div class="step-badge">ステップ 2</div>
+          <p class="step-text">
+            認可完了後、リダイレクトされたブラウザのURLバーから <b>oauth_verifier</b> の値（またはリダイレクト先のURL全体）をコピーして以下に貼り付け、「取得する」ボタンをクリックしてください。
+            <br><span style="font-size: 11px; color: var(--text-muted);">例: http://localhost/?oauth_token=...&<b>oauth_verifier=XXXXXX</b></span>
+          </p>
+          <div class="input-group">
+            <input type="text" id="oauth-verifier-input" placeholder="URL全体、または oauth_verifier の値をここに貼り付け" disabled>
+          </div>
+          <button type="button" id="btn-oauth-complete" class="btn secondary" disabled>
+            アクセストークンを取得・適用する
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Settings Card (Initially Hidden or Disabled until connected) -->
+    <section id="settings-card" class="card glass disabled">
+      <div class="card-header">
+        <span class="icon-span">⚙️</span>
+        <h2>動作環境設定</h2>
+      </div>
+      <p class="description">
+        Zaimに収支をコピーする際のデフォルトの口座を設定します。
+      </p>
+
+      <div class="api-form">
+        <div class="input-group">
+          <label for="default-payment-account">デフォルトの支出元口座 (Payment From)</label>
+          <select id="default-payment-account" disabled>
+            <option value="">接続テストに成功すると口座一覧が表示されます</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="default-income-account">デフォルトの収入先口座 (Income To)</label>
+          <select id="default-income-account" disabled>
+            <option value="">接続テストに成功すると口座一覧が表示されます</option>
+          </select>
+        </div>
+
+        <div class="button-row">
+          <button type="button" id="save-settings-button" class="btn secondary" disabled>
+            デフォルト口座を保存
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="app-footer">
+      <p>Made with ❤️ for smart budgeting. Version 1.0.0</p>
+    </footer>
+  </main>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast hidden">
+    <div class="toast-content">
+      <span id="toast-icon">✨</span>
+      <span id="toast-message">メッセージ</span>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
